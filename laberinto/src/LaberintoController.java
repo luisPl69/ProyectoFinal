@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.List;
+import java.util.Map;
 
 public class LaberintoController {
     private LaberintoModel modelo;
@@ -59,49 +60,62 @@ public class LaberintoController {
         tipoRecorridoSeleccionado = (String) JOptionPane.showInputDialog(null, "Seleccione el tipo de recorrido:",
                 "Tipo de Recorrido", JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
 
-        List<Celda> camino = null;
+        Map<String, List<Celda>> resultados = null;
+        long tiempoInicio = System.nanoTime(); // Captura el tiempo de inicio
 
         switch (tipoRecorridoSeleccionado) {
             case "Recursivo":
-                camino = modelo.findPathRecursively();
+                resultados = modelo.findPathRecursively();
                 break;
             case "Con Cache":
-                camino = modelo.findPathWithCache();
+                resultados = modelo.findPathWithCache();
                 break;
             case "BFS":
-                camino = modelo.findPathBFS();
+                resultados = modelo.findPathBFS();
                 break;
             case "DFS":
-                camino = modelo.findPathDFS();
+                resultados = modelo.findPathDFS();
                 break;
         }
 
-        if (camino != null && !camino.isEmpty()) {
-            mostrarRecorrido(camino);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró un camino.");
-            limpiarMuroYRecorrido(); // Limpiar muros, meta y jugador si no se encuentra un camino
-            iniciar(); // Reiniciar modo edición para permitir agregar nuevos muros
+        long tiempoFin = System.nanoTime(); // Captura el tiempo de fin
+        long tiempoTranscurrido = (tiempoFin - tiempoInicio) / 1000000; // 
+        if (resultados != null) {
+            List<Celda> recorridoCompleto = resultados.get("recorridoCompleto");
+            List<Celda> caminoFinal = resultados.get("caminoFinal");
+
+            if (caminoFinal != null && !caminoFinal.isEmpty()) {
+                mostrarRecorrido(recorridoCompleto, caminoFinal, tiempoTranscurrido);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró un camino.");
+                limpiarMuroYRecorrido(); // Limpiar muros, meta y jugador si no se encuentra un camino
+                iniciar(); // Reiniciar modo edición para permitir agregar nuevos muros
+            }
         }
     }
 
-    private void mostrarRecorrido(List<Celda> camino) {
+    private void mostrarRecorrido(List<Celda> recorridoCompleto, List<Celda> caminoFinal, long tiempoTranscurrido) {
         Timer timer = new Timer(300, new ActionListener() {
             int index = 0;
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (index < camino.size()) {
-                    Celda celda = camino.get(index);
+                if (index < recorridoCompleto.size()) {
+                    Celda celda = recorridoCompleto.get(index);
                     vista.actualizarBoton(celda.getFila(), celda.getColumna(), colorRecorrido);
                     index++;
                 } else {
                     ((Timer) e.getSource()).stop();
                     // Mostrar las coordenadas del recorrido y el tipo de recorrido seleccionado
-                    StringBuilder recorridoInfo = new StringBuilder("Tipo de recorrido: " + tipoRecorridoSeleccionado + "\nCoordenadas del recorrido:\n");
-                    for (Celda celda : camino) {
+                    StringBuilder recorridoInfo = new StringBuilder("Tipo de recorrido: " + tipoRecorridoSeleccionado + "\nCoordenadas del recorrido completo:\n");
+                    for (Celda celda : recorridoCompleto) {
                         recorridoInfo.append("[").append(celda.getFila()).append(", ").append(celda.getColumna()).append("]\n");
                     }
+                    recorridoInfo.append("\nCoordenadas del camino final:\n");
+                    for (Celda celda : caminoFinal) {
+                        recorridoInfo.append("[").append(celda.getFila()).append(", ").append(celda.getColumna()).append("]\n");
+                    }
+                    recorridoInfo.append("\nTiempo de ejecución: ").append(tiempoTranscurrido).append(" ms");
                     JOptionPane.showMessageDialog(null, recorridoInfo.toString(), "Recorrido Completo", JOptionPane.INFORMATION_MESSAGE);
                     limpiarRecorrido();
                     elegirMetodoRecorrido(); // Permitir al usuario seleccionar otro método

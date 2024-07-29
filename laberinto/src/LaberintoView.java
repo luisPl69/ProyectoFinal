@@ -65,14 +65,14 @@ public class LaberintoView {
         List<Celda> recorridoCompleto = paths.get("recorridoCompleto");
         List<Celda> caminoMasRapido = paths.get("caminoMasRapido");
 
-        // Pintar el recorrido completo en verde
+        
         if (recorridoCompleto != null) {
             for (Celda celda : recorridoCompleto) {
                 actualizarBoton(celda.getFila(), celda.getColumna(), Color.GREEN);
             }
         }
 
-        // Pintar el camino más rápido en rosa
+        
         if (caminoMasRapido != null) {
             for (Celda celda : caminoMasRapido) {
                 actualizarBoton(celda.getFila(), celda.getColumna(), Color.PINK);

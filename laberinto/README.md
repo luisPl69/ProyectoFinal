@@ -27,14 +27,10 @@ Sistema de Control de Versiones: Git (para gestión de código y colaboración)
 ## Criterios por Integrante:
 [Luis Plasencia]:
 
-- Contribuciones: Desarrollo del método recursivo simple y diseño de la interfaz gráfica de usuario (UI).
-- Responsabilidad: Implementación de la lógica para la búsqueda recursiva y creación de los componentes visuales para definir el laberinto y visualizar la ruta.
+- Contribuciones: Desarrolle una simulacion de un laberinto con interfaz grafica  para poder elegir diferentes metodos que vimos en clases.
+- Responsabilidad: Implementacion de codigo que hemos visto en las clases y otros temas investigados para poder crear la interfaz grafica y asi lograr el proposito de nuestra aplicacion en java utilizando los diferentes recorriodos utilizando pilas y colas en diferentes metodos.
 
 
-
-## Conclusiones
-- Evaluación de Métodos de Búsqueda
-En este proyecto, se implementaron cuatro métodos para encontrar el camino más corto en un laberinto: el método recursivo simple, la programación dinámica con cache, BFS (Breadth-First Search), y DFS (Depth-First Search). A continuación, se presentan las conclusiones sobre la efectividad y el rendimiento de cada uno de estos métodos:
 
 - Método Recursivo Simple:
 
@@ -66,7 +62,8 @@ En este proyecto, se implementaron cuatro métodos para encontrar el camino más
   - Videojuegos de Laberintos: Los algoritmos de búsqueda pueden ser utilizados para desarrollar juegos de laberintos en los que los jugadores deben encontrar el camino más corto o resolver laberintos generados aleatoriamente.
   - Simuladores de Rutas: Implementa simuladores de rutas para entrenar y educar a las personas en la planificación de rutas y la resolución de problemas de navegación.
 
+
+  ## Conclusiones
+-Bueno en conclusiones podemos ver que el metodo para encontrar el mejor camino mas eficiente es el bfs por que explora todos los nodos que sea necesario para encontrar el camino mas eficiente, implemente codigos para poder hacer una interfaz grafica y tambein sobre los colores en java.
+
 ![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
